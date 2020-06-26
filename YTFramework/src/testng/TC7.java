@@ -1,60 +1,43 @@
 package testng;
 
-import java.util.List;
+//import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.WebDriver.Options;
-import org.openqa.selenium.WebDriver.Window;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.testing.Base.Base;
+import org.testing.Pages.Login;
+import org.testing.Pages.Logout;
+import org.testing.Pages.VideoPlay;
 import org.testng.annotations.Test;
-
-public class TC7 
+public class TC7 extends Base
 
 {
-public ChromeDriver driver;
-	
-	@BeforeMethod
-	
-	 public void launch() throws Exception
-	 {
-		 System.setProperty("webdriver.chrome.driver", "C:\\Users\\Aanchal\\Desktop\\chromedriver.exe");//System.out.println("value is" +System.getProperty("webdriver.chrome.driver"));
-			driver=new ChromeDriver();//classname refeernce_varable=new classname  
-			//driver.manage().window().maximize();//Maximize the browser
-			driver.get("https://www.youtube.com");
-			Options op=driver.manage();
-			Window w=op.window();
-			w.maximize();	
-			 Thread.sleep(10000);
-	 }	
-	
+
 	@Test
 	public void signup_code() throws Exception
 	{
-		//1) Tag with attribute-------//Tagname[@attributeName='attValue']
+	/*	//1) Tag with attribute-------//Tagname[@attributeName='attValue']
         //input[@name='email']
-      WebElement sign_in=driver.findElement(By.xpath("//yt-formatted-string[@class='style-scope ytd-button-renderer style-suggestive size-small']"));
+	  WebElement sign_in=driver.findElement(By.xpath(pr.getProperty("sign_in")));
       sign_in.click();
       
       Thread.sleep(5000);
-      WebElement email=driver.findElement(By.xpath("//input[@type='email']"));
+      WebElement email=driver.findElement(By.xpath(pr.getProperty("email")));
 	  email.sendKeys("aanchal.malhotra500@gmail.com");
 	  
-	  WebElement next=driver.findElement(By.xpath("//span[@class='CwaK9']"));
+	  WebElement next=driver.findElement(By.xpath(pr.getProperty("next")));
 	  next.click();
 	  
 	  Thread.sleep(5000);
-	  WebElement password=driver.findElement(By.xpath("//input[@type='password']"));
+	  WebElement password=driver.findElement(By.xpath(pr.getProperty("password")));
 	  password.sendKeys("AAN123aan@586");
 		
-	  WebElement next2=driver.findElement(By.xpath("//span[@class='RveJvd snByac']"));
+	  WebElement next2=driver.findElement(By.xpath(pr.getProperty("next2")));
 	  next2.click();
 	  
 	  Thread.sleep(10000);
-		List<WebElement> video=driver.findElements(By.id("video-title"));
+		List<WebElement> video=driver.findElements(By.id(pr.getProperty("video")));
 		video.get(4).click();//it is going to fourth vide0
 	  
 	  Thread.sleep(10000);
@@ -63,36 +46,58 @@ public ChromeDriver driver;
 	
 		
 		Thread.sleep(10000);
-		driver.findElement(By.xpath("//yt-formatted-string[contains(text(),'Add a public comment...')]")).click();
+		driver.findElement(By.xpath(pr.getProperty("Add_comment"))).click();
 //		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
 		Thread.sleep(10000);
-		WebElement comment=driver.findElement(By.xpath("//div[@id='contenteditable-root' and @aria-label='Add a public comment...']"));
+		WebElement comment=driver.findElement(By.xpath(pr.getProperty("comment")));
 		comment.sendKeys("Perfect");
 		
 		Thread.sleep(10000);
-		WebElement commentSubmit = driver.findElement(By.xpath("//yt-formatted-string[@id='text' and text()='Comment']"));
+		WebElement commentSubmit = driver.findElement(By.xpath(pr.getProperty("commentSubmit")));
 		commentSubmit.click();
 		
 		
 		
 	   Thread.sleep(10000);
-	  WebElement signout=driver.findElement(By.xpath("//img[@class='style-scope yt-img-shadow' and @alt='Avatar image']"));
+	   WebElement signout=driver.findElement(By.xpath(pr.getProperty("signout")));
 	  signout.click();
 	  
 	  Thread.sleep(5000);
-	  WebElement out=driver.findElement(By.xpath("//yt-formatted-string[text()='Sign out']"));
+	  WebElement out=driver.findElement(By.xpath(pr.getProperty("out")));
 	  out.click();			    
-     
+     */
+		
+		 Login object=new Login(driver,pr);
+	     object.signin("aanchal.malhotra500@gmail.com", "AAN123aan@586");
+	     
+	     VideoPlay like=new VideoPlay(driver,pr);
+	     like.video_play();
+	     
+	     Thread.sleep(10000);
+		 JavascriptExecutor js = (JavascriptExecutor) driver;
+		 js.executeScript("window.scrollBy(0,400)");
+		
+			
+		Thread.sleep(10000);
+		driver.findElement(By.xpath(pr.getProperty("Add_comment"))).click();
+//		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			
+		Thread.sleep(10000);
+		WebElement comment=driver.findElement(By.xpath(pr.getProperty("comment")));
+		comment.sendKeys("Perfect");
+			
+		Thread.sleep(10000);
+		WebElement commentSubmit = driver.findElement(By.xpath(pr.getProperty("commentSubmit")));
+		commentSubmit.click();
+			
+	     
+		 Logout Out=new Logout(driver, pr);
+		 Out.signout();	
+		
+		
+		
+		
 	}
 	
-	@AfterMethod
-	public void close()
-	{
-		driver.close();
-	}
-
-	
-
-
 }
